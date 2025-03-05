@@ -1,7 +1,4 @@
-"""
-game.py - Manages the main game loop, rendering, and basic UI.
-"""
-
+# game.py
 import pygame
 import pygame_menu
 from pygame_menu import themes
@@ -9,6 +6,7 @@ from settings import *
 from player import Player
 from map import load_map
 from factions import factions
+from resourcemanager import ResourceManager  # Import the new resource manager
 
 class Game:
     def __init__(self):
@@ -17,6 +15,14 @@ class Game:
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         pygame.display.set_caption("Carbon Conflict")
         self.clock = pygame.time.Clock()
+
+        # Initialize ResourceManager to load resources
+        self.resource_manager = ResourceManager()
+        self.resource_manager.load_tile("default", "assets/pdtextures/461223200.jpg")
+        self.resource_manager.load_sprite("overworld", "assets/gfx/overworld.png", 16, 16)
+        # Load player sprite sheet with 16x16 frames
+        self.resource_manager.load_sprite("player", "assets/gfx/character.png", 16, 32)
+        self.resource_manager.load_background("bg", "assets/pdtextures/461223122.jpg")
 
         # Initialize player and map data after the main menu
         self.turn_count = 1
@@ -39,14 +45,12 @@ class Game:
             pygame.quit()
             quit()
 
-        menu = pygame_menu.Menu('Welcome', 600, 400, theme=themes.THEME_SOLARIZED)
-        #menu.add.text_input('Name: ', default='username', maxchar=20)
+        menu = pygame_menu.Menu('Welcome', 600, 400, theme=themes.THEME_DARK)
         menu.add.button('Play', start_the_game)
         menu.add.button('Quit', quit_game)
 
         # Pause execution and run the main menu event loop
         menu.mainloop(self.screen)
-
 
     def find_player(self):
         for y, row in enumerate(self.map_data):
@@ -78,8 +82,15 @@ class Game:
     def draw_map(self):
         for y, row in enumerate(self.map_data):
             for x, tile in enumerate(row):
-                color = WHITE if tile == EMPTY else BLACK
-                pygame.draw.rect(self.screen, color, (x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE))
+                if tile == "G":  # Grass
+                    self.screen.blit(self.resource_manager.get_sprite("overworld", 0, 0), (x * TILE_SIZE, y * TILE_SIZE))
+                elif tile == "W":  # Water
+                    self.screen.blit(self.resource_manager.get_sprite("overworld", 0, 1), (x * TILE_SIZE, y * TILE_SIZE))
+                elif tile == "B":  # Dirt
+                    self.screen.blit(self.resource_manager.get_sprite("overworld", 0, 2), (x * TILE_SIZE, y * TILE_SIZE))
+                else:
+                    # Default to a blank tile or some fallback
+                    self.screen.blit(self.resource_manager.get_tile("default"), (x * TILE_SIZE, y * TILE_SIZE))
 
     def draw_ui(self):
         font = pygame.font.SysFont(None, 24)
@@ -88,12 +99,19 @@ class Game:
         self.screen.blit(turn_text, (10, 10))
         self.screen.blit(faction_text, (10, 30))
 
+    def draw_player(self):
+        # For now, just display the first frame from the sprite sheet
+        self.screen.blit(self.resource_manager.get_sprite("player", 0, 0), (self.player.x * TILE_SIZE, self.player.y * TILE_SIZE))
+
     def run(self):
         while self.running:
             self.handle_events()
-            self.screen.fill(GREEN)
+            self.screen.fill(WHITE)  # Optional: You can also add a background image here
             self.draw_map()
-            self.player.draw(self.screen)
+            self.draw_player()  # Draw player sprite
             self.draw_ui()
             pygame.display.flip()
             self.clock.tick(FPS)
+
+if __name__ == '__main__':
+    Game()
