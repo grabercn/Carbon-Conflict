@@ -34,15 +34,6 @@ Victory isn’t just about capturing bases — it’s about securing the last vi
 | Name | Vibe |
 |---|---|
 | **Carbon Conflict** | Industrial collapse vs eco-rebellion |
-| **Extinction Front** | Dark, apocalyptic |
-| **Tidebreaker Tactics** | Focused on sea rise, water warfare |
-| **Gaia Reborn** | Hopeful and green-focused |
-| **EcoFront** | Classic tactics game feel |
-| **Ashes to Earth** | Post-collapse rebirth |
-| **Climate Command** | Tactical and direct |
-| **Stormfront 2145** | Climate disaster meets future war |
-| **Everscorch Tactics** | Emphasizing heat and desertification |
-| **Green Wars: Final Earth** | GBA-style retro feel |
 
 ---
 
@@ -62,5 +53,5 @@ What if the **players’ actions in battle affect future maps**?
 
 ---
 
-This document is a living draft, feel free to expand on ideas! 🚀
+This document is a living draft and will be updated as new ideas come to light.
 
