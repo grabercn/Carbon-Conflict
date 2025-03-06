@@ -5,7 +5,7 @@ settings.py - Stores constants and configuration for Carbon Conflict.
 # Screen settings
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
-TILE_SIZE = 40
+TILE_SIZE = 16
 FPS = 30
 
 # Colors

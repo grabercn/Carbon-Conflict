@@ -6,7 +6,7 @@ from settings import *
 from player import Player
 from map import load_map
 from factions import factions
-from resourcemanager import ResourceManager  # Import the new resource manager
+from resourcemanager import ResourceManager  
 
 class Game:
     def __init__(self):
@@ -18,7 +18,7 @@ class Game:
 
         # Initialize ResourceManager to load resources
         self.resource_manager = ResourceManager()
-        self.resource_manager.load_tile("default", "assets/pdtextures/461223200.jpg")
+        self.resource_manager.load_sprite("default", "assets/gfx/overworld.png", 16, 16)
         self.resource_manager.load_sprite("overworld", "assets/gfx/overworld.png", 16, 16)
         # Load player sprite sheet with 16x16 frames
         self.resource_manager.load_sprite("player", "assets/gfx/character.png", 16, 32)
@@ -90,7 +90,7 @@ class Game:
                     self.screen.blit(self.resource_manager.get_sprite("overworld", 0, 2), (x * TILE_SIZE, y * TILE_SIZE))
                 else:
                     # Default to a blank tile or some fallback
-                    self.screen.blit(self.resource_manager.get_tile("default"), (x * TILE_SIZE, y * TILE_SIZE))
+                    self.screen.blit(self.resource_manager.get_sprite("default", 16, 16), (x * TILE_SIZE, y * TILE_SIZE))
 
     def draw_ui(self):
         font = pygame.font.SysFont(None, 24)
